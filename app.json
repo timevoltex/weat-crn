@@ -1,0 +1,17 @@
+{
+  "name": "weat-crn",
+  "displayName": "weat-crn",
+  "expo": {
+    "name": "weat-crn",
+    "slug": "weat-crn",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
