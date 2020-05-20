@@ -24,7 +24,7 @@ import {
 import { SearchTab } from "../Home/Hometab";
 import Menu from "../../assets/svgicon/Menu_01.js";
 import Heart from "../../assets/svgicon/Heart_01.js";
-import FeedIcon from "../../assets/svgicon/Feed_01.js";
+import FeedIcon from "../../assets/svgicon/Feed_01";
 import Bookmark from "../../assets/svgicon/Bookmark_01.js";
 
 
@@ -80,7 +80,7 @@ function InstaTab() {
           </CardItem>
           <CardItem cardBody>
             <Image
-              source={require("../../assets/food1.jpg")}
+              source={require("../../assets/food/food1.jpg")}
               style={{ width: viewportWidth, height: viewportWidth, flex: 1 }}
             />
           </CardItem>
@@ -117,55 +117,55 @@ function PhotoTab() {
       <View style={{flexDirection: "row", flexWrap: "wrap"}}>
 
       <Image
-        source={require("../../assets/food1.jpg")}
+        source={require("../../assets/food/food1.jpg")}
         style={{ width: viewportWidth / 3, height: viewportWidth / 3 }}
         />
       <Image
-        source={require("../../assets/food1.jpg")}
+        source={require("../../assets/food/food1.jpg")}
         style={{ width: viewportWidth / 3, height: viewportWidth / 3 }}
         />
       <Image
-        source={require("../../assets/food1.jpg")}
+        source={require("../../assets/food/food1.jpg")}
         style={{ width: viewportWidth / 3, height: viewportWidth / 3 }}
         />
       <Image
-        source={require("../../assets/food1.jpg")}
+        source={require("../../assets/food/food1.jpg")}
         style={{ width: viewportWidth / 3, height: viewportWidth / 3 }}
         />
       <Image
-        source={require("../../assets/food1.jpg")}
+        source={require("../../assets/food/food1.jpg")}
         style={{ width: viewportWidth / 3, height: viewportWidth / 3 }}
         />
       <Image
-        source={require("../../assets/food1.jpg")}
+        source={require("../../assets/food/food1.jpg")}
         style={{ width: viewportWidth / 3, height: viewportWidth / 3 }}
         />
       <Image
-        source={require("../../assets/food1.jpg")}
+        source={require("../../assets/food/food1.jpg")}
         style={{ width: viewportWidth / 3, height: viewportWidth / 3 }}
         />
       <Image
-        source={require("../../assets/food1.jpg")}
+        source={require("../../assets/food/food1.jpg")}
         style={{ width: viewportWidth / 3, height: viewportWidth / 3 }}
         />
       <Image
-        source={require("../../assets/food1.jpg")}
+        source={require("../../assets/food/food1.jpg")}
         style={{ width: viewportWidth / 3, height: viewportWidth / 3 }}
         />
       <Image
-        source={require("../../assets/food1.jpg")}
+        source={require("../../assets/food/food1.jpg")}
         style={{ width: viewportWidth / 3, height: viewportWidth / 3 }}
         />
       <Image
-        source={require("../../assets/food1.jpg")}
+        source={require("../../assets/food/food1.jpg")}
         style={{ width: viewportWidth / 3, height: viewportWidth / 3 }}
         />
       <Image
-        source={require("../../assets/food1.jpg")}
+        source={require("../../assets/food/food1.jpg")}
         style={{ width: viewportWidth / 3, height: viewportWidth / 3 }}
         />
       <Image
-        source={require("../../assets/food1.jpg")}
+        source={require("../../assets/food/food1.jpg")}
         style={{ width: viewportWidth / 3, height: viewportWidth / 3 }}
         />
         </View>
