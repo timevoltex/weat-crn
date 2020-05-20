@@ -1,9 +1,9 @@
 {
-  "name": "weat-crn",
-  "displayName": "weat-crn",
+  "name": "weat_crn",
+  "displayName": "weat_crn",
   "expo": {
-    "name": "weat-crn",
-    "slug": "weat-crn",
+    "name": "weat_crn",
+    "slug": "weat_crn",
     "version": "1.0.0",
     "platforms": [
       "ios",
