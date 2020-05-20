@@ -12,6 +12,13 @@
     ],
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "ios": {
+      "bundleIdentifier": "weat-proto"
+    },
+    "android": {
+      "package": "weat-proto"
+    },
+    "entryPoint": "node_modules/expo/AppEntry.js"
   }
 }
