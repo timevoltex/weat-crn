@@ -13,12 +13,12 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "entryPoint": "node_modules/expo/AppEntry.js",
     "ios": {
       "bundleIdentifier": "weatproto"
     },
     "android": {
       "package": "weatproto"
-    },
-    "entryPoint": "node_modules/expo/AppEntry.js"
+    }
   }
 }
