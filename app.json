@@ -14,10 +14,10 @@
       "**/*"
     ],
     "ios": {
-      "bundleIdentifier": "weat-proto"
+      "bundleIdentifier": "weatproto"
     },
     "android": {
-      "package": "weat-proto"
+      "package": "weatproto"
     },
     "entryPoint": "node_modules/expo/AppEntry.js"
   }
