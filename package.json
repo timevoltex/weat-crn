@@ -17,8 +17,9 @@
     "native-base": "^2.13.12",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
+    "react-kakao-maps": "github:Musma/react-kakao-maps",
     "react-native": "~0.61.5",
-    "react-native-geolocation-service": "^4.0.1",
+    "react-native-geolocation-service": "^4.0.2",
     "react-native-gesture-handler": "~1.6.0",
     "react-native-maps": "^0.27.1",
     "react-native-nmap": "0.0.48",
@@ -34,6 +35,7 @@
     "@types/react": "~16.9.23",
     "@types/react-native": "~0.61.23",
     "babel-preset-expo": "~8.1.0",
+    "daum.maps.d.ts": "github:Musma/daum.maps.d.ts",
     "jest-expo": "~37.0.0",
     "typescript": "~3.8.3"
   },
