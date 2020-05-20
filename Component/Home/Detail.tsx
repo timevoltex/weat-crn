@@ -2,98 +2,88 @@ import React from "react";
 import {
   Button,
   Container,
-  Header,
   Content,
-  Left,
-  Body,
-  Title,
-  Right,
   List,
   ListItem,
-  Footer,
   Badge,
-  Fab,
   Icon,
+  Tabs,
+  Tab,
+  TabHeading,
 } from "native-base";
-import { Image, StyleSheet, View, Dimensions, Text } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  View,
+  Dimensions,
+  Text,
+  ScrollView,
+  ViewBase,
+} from "react-native";
 
 import MapView, { Marker } from "react-native-maps";
-
-// import NaverMapView, {
-//   Circle,
-//   Marker,
-//   Path,
-//   Polyline,
-//   Polygon,
-// } from "react-native-nmap";
+import {useNavigation, useRoute} from '@react-navigation/native'
 
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get(
   "window"
 );
 
-function StoreDetail({ navigation }: { navigation: any }) {
-  // const P0 = { latitude: 37.564362, longitude: 126.977011 };
-  // const P1 = { latitude: 37.565051, longitude: 126.978567 };
-  // const P2 = { latitude: 37.565383, longitude: 126.976292 };
+function StoreDetailContent() {
+  const route = useRoute();
+  const object = route.params;
   return (
-    <Container>
-      <Content>
-        <View
-          style={{
-            width: viewportWidth,
-            height: viewportWidth,
-            backgroundColor: "#DCDCDC",
-          }}
-        />
+    <Content style={{ flex: 1 }}>
+      <ScrollView>
+        <Image source={object.src} style={{width:viewportWidth, height:viewportWidth}}/>
         <View style={{ padding: 17 }}>
           <View
             style={{
-              display: "flex",
+              flexDirection:'row',
               justifyContent: "space-between",
               width: "100%",
             }}
           >
-            <Text style={{ fontSize: 14, color: "#707070" }}>time</Text>
-            <Icon style={{ color: "#CCC", fontSize: 14 }} name="md-share" />
+            <Text style={{ fontSize: 14, color: "#707070", textAlignVertical:'bottom' }}>{object.sTime}~{object.eTime}</Text>
+            <Icon style={{ color: "#CCC", fontSize: 30}} name="md-share" />
           </View>
-          <Text style={{ fontWeight: "bold", fontSize: 22 }}>menu</Text>
-          <Text style={{ fontSize: 16, color: "#707070" }}>store</Text>
-          <Text style={{ fontSize: 14, color: "#707070" }}>address</Text>
+          <Text style={{ fontWeight: "bold", fontSize: 22 }}>{object.menu}</Text>
+          <Text style={{ fontSize: 16, color: "#707070" }}>{object.store}</Text>
+          <Text style={{ fontSize: 14, color: "#707070" }}>{object.addr}</Text>
           <View
             style={{
-              display: "flex",
+              flexDirection:'row',
               justifyContent: "space-between",
               width: "100%",
             }}
           >
-            <Text
-              style={{ fontSize: 14, fontWeight: "bold", color: "#707070" }}
-            >
-              n%
+            <View style={{flexDirection:'row'}}>
+              <Text style={{fontSize:14, color:'#707070', opacity:0.07, fontWeight:'bold', textAlignVertical:'bottom'}}>
+          {object.sale}%
+              </Text>
               <Text
-                style={{
-                  fontWeight: "normal",
+                style={{fontSize:20,
                   textDecorationLine: "line-through",
                   color: "#c2c2c2",
                   textDecorationColor: "#c2c2c2",
                 }}
               >
-                price
+                {object.price}
               </Text>
-            </Text>
-            <Text>n개 남음</Text>
+            </View>
+              <Text style={{color:'#ccc', fontSize:14}}>{object.remain}개 남음</Text>
           </View>
           <View
             style={{
-              display: "flex",
+              flexDirection:'row',
               justifyContent: "space-between",
               width: "100%",
+              
             }}
           >
             <Text
-              style={{ fontSize: 20, fontWeight: "bold", color: "#9943fc" }}
+              style={{ fontSize: 20, fontWeight: "bold", color: "#9943fc", }}
             >
-              salePrice원
+              {object.price*((100-object.sale)/100)}원
             </Text>
             <Badge
               style={{
@@ -101,9 +91,10 @@ function StoreDetail({ navigation }: { navigation: any }) {
                 backgroundColor: "#9943fc",
                 width: 41,
                 height: 21,
+                
               }}
             >
-              <Text style={{ fontSize: 14, color: "white" }}>n분</Text>
+              <Text style={{ fontSize: 14, color: "white" }}>{object.remain}분</Text>
             </Badge>
           </View>
         </View>
@@ -164,65 +155,18 @@ function StoreDetail({ navigation }: { navigation: any }) {
                     height: viewportWidth - 30,
                   }}
                   initialRegion={{
-                    latitude: 37.78825,
-                    longitude: -122.4324,
-                    latitudeDelta: 0.0922,
-                    longitudeDelta: 0.0421,
+                    latitude: object.lat,
+                    longitude: object.long,
+                    latitudeDelta: 0.0022,
+                    longitudeDelta: 0.0041,
                   }}
                 />
                 <Marker
-                  coordinate={{latitude:37.78825, longitude:-122.4324}}
+                  coordinate={{ latitude: object.lat, longitude: object.long }}
                   title="this is a marker"
                   description="this is a example"
                 />
               </View>
-
-              {/* <NaverMapView
-                style={{ width: "100%", height: "100%" }}
-                showsMyLocationButton={true}
-                center={{ ...P0, zoom: 16 }}
-                onCameraChange={(e) =>
-                  console.warn("onCameraChange", JSON.stringify(e))
-                }
-                onMapClick={(e) =>
-                  console.warn("onMapClick", JSON.stringify(e))
-                }
-              >
-                <Marker
-                  coordinate={P0}
-                  onClick={() => console.warn("onClick! p0")}
-                />
-                <Marker
-                  coordinate={P1}
-                  pinColor="blue"
-                  onClick={() => console.warn("onClick! p1")}
-                />
-                <Marker
-                  coordinate={P2}
-                  pinColor="red"
-                  onClick={() => console.warn("onClick! p2")}
-                />
-                <Path
-                  coordinates={[P0, P1]}
-                  onClick={() => console.warn("onClick! path")}
-                  width={10}
-                />
-                <Polyline
-                  coordinates={[P1, P2]}
-                  onClick={() => console.warn("onClick! polyline")}
-                />
-                <Circle
-                  coordinate={P0}
-                  color={"rgba(255,0,0,0.3)"}
-                  radius={200}
-                  onClick={() => console.warn("onClick! circle")}
-                />
-                <Polygon
-                  coordinates={[P0, P1, P2]}
-                  color={`rgba(0, 0, 0, 0.5)`}
-                  onClick={() => console.warn("onClick! polygon")}
-                />
-              </NaverMapView> */}
             </ListItem>
             <ListItem itemHeader first>
               <Text style={{ fontSize: 16, color: "#707070" }}>
@@ -241,32 +185,54 @@ function StoreDetail({ navigation }: { navigation: any }) {
             </ListItem>
           </List>
         </View>
-        <Button
-          onPress={() => navigation.navigate("OrderPage")}
-          style={[
-            style.boxShadow,
-            {
-              width: "90%",
-              height: 50,
-              borderRadius: 30,
-              backgroundColor: "#9c48fc",
-              bottom: 10,
-              left: "5%",
-            },
-          ]}
+      </ScrollView>
+    </Content>
+  );
+}
+
+function StoreDetail() {
+  const navigation = useNavigation();
+  return (
+    <Container>
+      <Tabs
+        style={{ backgroundColor: "transparent" }}
+        tabBarUnderlineStyle={{ backgroundColor: "transparent" }}
+        tabBarPosition="bottom"
+      >
+        <Tab
+          heading={
+            <TabHeading style={{ backgroundColor: "#f2f2f2" }}
+            >
+              <View
+                style={[
+                  style.boxShadow,
+                  {
+                    backgroundColor: "#9948fc",
+                    borderRadius: 30,
+                    width: viewportWidth - 30,
+                    height: 50,
+                    justifyContent:'center'
+                  },
+                ]}
+              >
+                <Text onPress={() => navigation.navigate('OrderPage')}
+                  style={{
+                    color: "#fff",
+                    fontSize: 18,
+                    textAlignVertical:'center',
+                    textAlign:'center',
+                    margin:'auto'
+                  }}
+                >
+                  예약하기
+                </Text>
+              </View>
+            </TabHeading>
+          }
         >
-          <Text
-            style={{
-              alignSelf: "center",
-              marginHorizontal: "auto",
-              color: "white",
-              fontSize: 20,
-            }}
-          >
-            예약하기
-          </Text>
-        </Button>
-      </Content>
+          <StoreDetailContent/>
+        </Tab>
+      </Tabs>
     </Container>
   );
 }

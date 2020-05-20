@@ -1,5 +1,13 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, Dimensions, ScrollView } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  ScrollView,
+  Platform,
+  Image,
+} from "react-native";
 import {
   Container,
   Content,
@@ -19,16 +27,28 @@ import {
   Grid,
   Col,
   Right,
+  ScrollableTab,
 } from "native-base";
 import Search from "../../assets/svgicon/Search_01.js";
 import Heart from "../../assets/svgicon/Heart_01.js";
-import {Gps_01} from '../AllImage';
-
+import { Filter_01 } from "../AllImage";
+import { useNavigation } from "@react-navigation/native";
+import { info } from "../test";
+import { TabContainer } from "native-base/src/basic/TabContainer";
 
 export function SearchTab() {
   return (
-    <Header searchBar rounded transparent style={{ paddingTop: 0 }}>
-      <Item style={{backgroundColor:'#fefefe'}}>
+    <Header
+      transparent
+      searchBar
+      rounded
+      style={
+        Platform.OS === "ios"
+          ? { paddingVertical: 20, marginVertical: -10 }
+          : { paddingVertical: 30, marginVertical: -15 }
+      }
+    >
+      <Item style={{ backgroundColor: "#fefefe", alignContent: "center" }}>
         <Search fill="#c2c2c2" style={{ marginLeft: 10 }} />
         <Input
           placeholder="가게명, 메뉴명으로 검색해보세요"
@@ -39,42 +59,83 @@ export function SearchTab() {
     </Header>
   );
 }
-const Hometab = ({ navigation:{navigate} }) => {
+const Hometab = () => {
   const [active, setActive] = useState(0);
   return (
     <Container>
       <SearchTab />
-      <View
-        style={{ width: "100%", height: 130, backgroundColor: "#c2c2c2" }}
-      />
-      <Tabs tabBarUnderlineStyle={{backgroundColor:'#9948fc'}} onChangeTab={({ i }:{i:any}) => setActive(i)}>
-        <Tab
-          heading={
-            <TabHeading style={{backgroundColor:'#efefef'}}>
-              <Text style={active === 0 ? {color:'#9948fc'} : {color:'#c2c2c2'}}>이벤트</Text>
-            </TabHeading>
-          }
-        >
-          <EventTab props={navigate}/>
-        </Tab>
-        <Tab
-          heading={
-            <TabHeading style={{backgroundColor:'#efefef'}}>
-              <Text style={active === 1 ? {color:'#9948fc'} : {color:'#c2c2c2'}}>타임세일</Text>
-            </TabHeading>
-          }
-        >
-          <TimeSale props={navigate}/>
-        </Tab>
-        <Tab
-          heading={
-            <TabHeading style={{backgroundColor:'#efefef'}}>
-              <Text style={active === 2 ? {color:'#9948fc'} : {color:'#c2c2c2'}}>랭킹</Text>
-            </TabHeading>
-          }
-        >
-          <Ranking />
-        </Tab>
+      <Image source={require("../../assets/icon/banner.png")} />
+      <Tabs
+        tabBarUnderlineStyle={{ backgroundColor: "#9948fc" }}
+        onChangeTab={({ i }: { i: any }) => setActive(i)}
+        renderTabBar={() => (
+          <ScrollableTab
+            style={{ width: viewportWidth, backgroundColor: "transparent" }}
+            tabsContainerStyle={{ width: 200 }}
+          ><Filter_01 fill='#c2c2c2' width={14} height={14}/></ScrollableTab>
+        )}
+      >
+          <Tab
+            tabStyle={{ width: 100 }}
+            heading={
+              <TabHeading style={{ backgroundColor: "#fff", alignSelf:'center' }}>
+                <Text
+                  style={
+                    active === 0 ? { color: "#9948fc",  } : { color: "#c2c2c2" }
+                  }
+                >
+                  이벤트
+                </Text>
+              </TabHeading>
+            }
+          >
+            <EventTab />
+          </Tab>
+          <Tab
+            heading={
+              <TabHeading style={{ backgroundColor: "#fff" }}>
+                <Text
+                  style={
+                    active === 1 ? { color: "#9948fc" } : { color: "#c2c2c2" }
+                  }
+                >
+                  타임세일
+                </Text>
+              </TabHeading>
+            }
+          >
+            <TimeSale />
+          </Tab>
+          <Tab
+            heading={
+              <TabHeading style={{ backgroundColor: "#fff" }}>
+                <Text
+                  style={
+                    active === 2 ? { color: "#9948fc" } : { color: "#c2c2c2" }
+                  }
+                >
+                  랭킹
+                </Text>
+              </TabHeading>
+            }
+          >
+            <Ranking />
+          </Tab>
+          <Tab
+            heading={
+              <TabHeading style={{ backgroundColor: "#fff" }}>
+                <Text
+                  style={
+                    active === 3 ? { color: "#9948fc" } : { color: "#c2c2c2" }
+                  }
+                >
+                  랭킹
+                </Text>
+              </TabHeading>
+            }
+          >
+            
+          </Tab>
       </Tabs>
     </Container>
   );
@@ -85,8 +146,7 @@ const { width: viewportWidth, height: viewportHeight } = Dimensions.get(
   "window"
 );
 
-
-function EventTab({props}) {
+function EventTab() {
   return (
     <ScrollView>
       <Content padder>
@@ -96,7 +156,7 @@ function EventTab({props}) {
         <Button transparent>
           <Text>더보기</Text>
         </Button>
-        <SaleList props={props}/>
+        <SaleList />
       </Content>
     </ScrollView>
   );
@@ -104,63 +164,128 @@ function EventTab({props}) {
 
 function EventContent() {
   return (
-    <Card>
+    <Card style={{ borderBottomRightRadius: 10, borderBottomLeftRadius: 10 }}>
       <CardItem>
         <Left>
-          <Icon name="ios-person" />
+          <Icon name="ios-person" style={{ fontSize: 80 }} />
           <Body>
-            <Text>
-              <Text>어디에요</Text> | 가게에요
+            <Text style={{ fontWeight: "bold", fontSize: 14 }}>
+              <Text style={{ color: "#9948fc" }}>어디에요</Text> | 가게에요
             </Text>
-            <Text>내용이에요</Text>
-            <Text>날짜에오</Text>
+            <Text style={{ fontSize: 16, fontWeight: "bold" }}>내용이에요</Text>
+            <Text style={{ fontSize: 12, color: "#707070" }}>날짜에오</Text>
           </Body>
         </Left>
       </CardItem>
-      <CardItem>
-        <Text>보상이에오</Text>
+      <CardItem
+        style={{
+          backgroundColor: "#9948fc",
+          justifyContent: "center",
+          borderBottomLeftRadius: 10,
+          borderBottomRightRadius: 10,
+        }}
+      >
+        <Text
+          style={{
+            color: "#fff",
+            alignSelf: "center",
+            fontSize: 14,
+            fontWeight: "bold",
+          }}
+        >
+          보상이에오
+        </Text>
       </CardItem>
     </Card>
   );
 }
 
-function SaleList({props}) {
+function SaleList() {
+  const navigation = useNavigation();
   return (
-    <Card>
-      <CardItem cardBody button onPress={() => props('Detail')}>
-        <Thumbnail
-          style={{ width: viewportWidth / 3, height: viewportWidth / 3 }}
-          square
-          source={require("../../assets/food1.jpg")}
-        />
-        <Body style={{ paddingHorizontal: 10, alignSelf: "center" }}>
-          <Text>
-            <Text>시간</Text>
-            <Text>갯수</Text>
-          </Text>
-          <Text>menu</Text>
-          <Text>address</Text>
-          <Text>
-            <Text>
-              Sale%<Text></Text>Price
-            </Text>
-          </Text>
-        </Body>
-      </CardItem>
-    </Card>
+    <>
+      {info.map((item, i) => (
+        <Card style={{ borderRadius: 10, overflow: "hidden" }} key={item.store}>
+          <CardItem
+            cardBody
+            button
+            onPress={() =>
+              navigation.navigate("Detail", {
+                store: item.store,
+                menu: item.menu,
+                src: item.src,
+                addr: item.addr,
+                reamin: item.remain,
+                sale: item.sale,
+                price: item.price,
+                sTime: item.startTime,
+                eTime: item.endTime,
+                lat: item.lat,
+                long: item.long,
+              })
+            }
+          >
+            {console.log(item)}
+            <Thumbnail
+              style={{ width: viewportWidth / 3, height: viewportWidth / 3 }}
+              square
+              source={item.src}
+            />
+            <Body style={{ paddingHorizontal: 10, alignSelf: "center" }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  width: "100%",
+                }}
+              >
+                <Text style={{ fontSize: 12, color: "#707070" }}>
+                  {item.startTime} ~ {item.endTime}
+                </Text>
+                <Text style={{ fontSize: 12, color: "#ccc" }}>
+                  {item.remain}개 남음
+                </Text>
+              </View>
+              <Text style={{ fontSize: 18, fontWeight: "bold" }}>
+                {item.menu}
+              </Text>
+              <Text style={{ fontWeight: "bold", fontSize: 14 }}>
+                {item.store}
+              </Text>
+              <Text style={{ fontWeight: "bold", fontSize: 14 }}>
+                {item.addr}
+              </Text>
+              <View
+                style={{
+                  width: "100%",
+                  justifyContent: "space-between",
+                  flexDirection: "row",
+                }}
+              >
+                <Text
+                  style={{ fontSize: 20, fontWeight: "bold", color: "#c2c2c2" }}
+                >
+                  {item.sale}%
+                </Text>
+                <Text
+                  style={{ color: "#9948fc", fontSize: 20, fontWeight: "bold" }}
+                >
+                  {item.price * ((100 - item.sale) / 100)}
+                </Text>
+              </View>
+            </Body>
+          </CardItem>
+        </Card>
+      ))}
+    </>
   );
 }
 
-function TimeSale(props) {
+function TimeSale() {
   return (
     <ScrollView>
       <Content padder>
-        <SaleList props={props}/>
-        <SaleList props={props}/>
-        <SaleList props={props}/>
-        <SaleList props={props}/>
-        <SaleList props={props}/>
-        <SaleList props={props}/>
+        <SaleList />
       </Content>
     </ScrollView>
   );
@@ -168,15 +293,17 @@ function TimeSale(props) {
 
 function Ranking() {
   function RankingContent() {
-    return (
+    return ( 
       <Grid>
         <Col style={{ flexGrow: 0, flexShrink: 1, flexBasis: 1 }}>
           <Text
             style={{
-              width: 24,
+              width: 40,
               marginVertical: 20,
               textAlign: "right",
-              alignSelf:'center',
+              alignSelf: "center",
+              fontSize:20,
+              fontWeight:'bold'
             }}
           >
             1
@@ -190,19 +317,20 @@ function Ranking() {
               alignSelf: "flex-end",
             }}
           >
-            <CardItem cardBody>
-              <Left>
+            <CardItem >
+              <Left >
                 <Icon name="ios-person" />
                 <Body>
-                  <Text>
-                    menu<Text>Match</Text>
-                  </Text>
-                  <Text>address</Text>
+                  <View style={{flexDirection:'row'}}>
+                    <Text style={{fontSize:16, fontWeight:'bold'}}>menu</Text>
+                    <Text style={{fontSize:16, fontWeight:'bold', color:'#9948fc'  }}>Match</Text>
+                  </View>
+                  <Text style={{fontSize:10, color:'#b8b8b8'}}>address</Text>
                 </Body>
               </Left>
-              <Right style={{ flex: 0, paddingRight: 10 }}>
-                <Heart fill="#c2c2c2" width={24} height={24} />
-                <Text>number</Text>
+              <Right style={{ flex: 0, paddingRight: 10, alignItems:'center' }}>
+                <Heart fill="#c2c2c2" width={16} height={16} />
+                <Text style={{fontSize:10, color:'#373737'}}>number</Text>
               </Right>
             </CardItem>
           </Card>
@@ -224,12 +352,3 @@ function Ranking() {
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
