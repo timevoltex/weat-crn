@@ -21,12 +21,11 @@ import {
   Footer,
   Icon,
 } from "native-base";
-import { Text, StyleSheet, View, Dimensions } from "react-native";
-import Multiply from "../../assets/svgicon/Multiply_01.js";
-import { StackActions } from "@react-navigation/native";
+import { Text, StyleSheet, View, Dimensions, Platform } from "react-native";
+import Multiply from "../../assets/svgicon/Multiply_01";
 const { width, height } = Dimensions.get("window");
 
-function OrderPage({ navigation }:{navigation:any}) {
+function OrderPage({ navigation }: { navigation: any }) {
   const [selected, setSelected] = useState("v1");
   const [overlay, setOverlay] = useState(false);
   return (
@@ -37,14 +36,13 @@ function OrderPage({ navigation }:{navigation:any}) {
           <CardItem>
             <Thumbnail
               square
-              source={require("../../assets/food1.jpg")}
+              source={require("../../assets/food/food1.jpg")}
               style={{ width: 135, height: 135 }}
             />
 
             <Body style={{ paddingLeft: 10, alignSelf: "center" }}>
-              <Text
+              <View
                 style={{
-                  fontSize: 14,
                   width: "100%",
                   display: "flex",
                   justifyContent: "space-between",
@@ -52,10 +50,9 @@ function OrderPage({ navigation }:{navigation:any}) {
               >
                 <Text>22:00-23:00</Text>
                 <Text>3개 남음</Text>
-              </Text>
-              <Text
+              </View>
+              <View
                 style={{
-                  fontSize: 14,
                   width: "100%",
                   display: "flex",
                   justifyContent: "space-between",
@@ -63,11 +60,10 @@ function OrderPage({ navigation }:{navigation:any}) {
               >
                 <Text style={{ fontSize: 14 }}>닭삼겹</Text>
                 <RendertimeBadge />
-              </Text>
+              </View>
               <Text style={{ fontSize: 14 }}>청미래 닭갈비</Text>
-              <Text
+              <View
                 style={{
-                  fontSize: 14,
                   width: "100%",
                   display: "flex",
                   justifyContent: "space-between",
@@ -75,7 +71,7 @@ function OrderPage({ navigation }:{navigation:any}) {
               >
                 <Text>춘천시 석사동 198-3</Text>
                 <Text>price원</Text>
-              </Text>
+              </View>
             </Body>
           </CardItem>
         </Card>
@@ -125,13 +121,14 @@ function OrderPage({ navigation }:{navigation:any}) {
               height: 50,
               borderRadius: 30,
               backgroundColor: "#9c48fc",
+              justifyContent: "center",
             },
           ]}
         >
           <Text
             style={{
-              alignSelf: "center",
-              marginHorizontal: "auto",
+              textAlignVertical: "center",
+              textAlign: "center",
               color: "white",
               fontSize: 20,
             }}
@@ -152,8 +149,7 @@ const RendertimeBadge = () => (
 );
 export default OrderPage;
 
-function Thanks({ props }:{props:any}) {
-  const [activeIndex, setActiveIndex] = useState(0);
+function Thanks({ props }: { props: any }) {
   return (
     <View
       style={{
@@ -163,50 +159,63 @@ function Thanks({ props }:{props:any}) {
         height: height,
         position: "absolute",
         zIndex: 99,
+        justifyContent: "center",
       }}
     >
-      <Icon name="ios-person" style={{ fontSize: 50 }} />
       <Button
         transparent
         onPress={() =>
-          props.reset({ index: 3, routes: [{ name : "OrderListTab" }] })
+          props.reset({ index: 1, routes: [{ name: "mainscreen" }] })
         }
-        style={{ marginHorizontal: "auto", marginVertical: "auto" }}
+        style={{
+          position: "relative",
+          alignSelf: "center",
+          height: 128,
+          width: 128,
+        }}
       >
-        <View style={{ position: "relative", top: 10, left: -10 }}>
-          <Text
-            style={{
-              color: "#9c48fc",
-              position: "absolute",
-              width: 150,
-              zIndex: 99,
-              top: -72,
-              left: -20,
-              fontWeight: "bold",
-            }}
-          >
-            감사합니다!
-          </Text>
-          <Thumbnail
-            style={{
-              width: 128,
-              height: 128,
-              top: -100,
-              left: -50,
-              borderRadius: 80,
-              position: "absolute",
-            }}
-            source={require("../../assets/icon/OrderComplete.jpg")}
-          />
-          <Multiply
-            style={{
-              backgroundColor: "#fff",
-              top: 14,
-              borderRadius: 50,
-              position: "absolute",
-            }}
-            fill="#9c48fc"
-          />
+        <Text
+          style={
+            Platform.OS === "ios"
+              ? {
+                  color: "#9c48fc",
+                  position: "absolute",
+                  fontSize: 14,
+                  zIndex: 9999,
+                  transform: [{ translateX: 35 }, { translateY: -82 }],
+                  fontWeight: "bold",
+                }
+              : {
+                  color: "#9c48fc",
+                  position: "absolute",
+                  fontSize: 14,
+                  zIndex: 9999,
+                  transform: [{ translateX: 29 }, { translateY: -82 }],
+                  fontWeight: "bold",
+                }
+          }
+        >
+          감사합니다!
+        </Text>
+        <Thumbnail
+          style={{
+            width: 128,
+            height: 128,
+            borderRadius: 80,
+            top: -50,
+            position: "absolute",
+          }}
+          source={require("../../assets/icon/OrderComplete.jpg")}
+        />
+        <View
+          style={{
+            borderRadius: 40,
+            backgroundColor: "white",
+            position: "absolute",
+            transform: [{ translateX: 50 }, { translateY: 10 }],
+          }}
+        >
+          <Multiply fill="#9c48fc" />
         </View>
       </Button>
     </View>
